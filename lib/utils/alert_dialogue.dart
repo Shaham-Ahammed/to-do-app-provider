@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app_provider/model/todo_model.dart';
 import 'package:to_do_app_provider/utils/colors.dart';
 import 'package:to_do_app_provider/utils/font.dart';
 import 'package:to_do_app_provider/utils/mediaquery.dart';
 import 'package:to_do_app_provider/utils/sizedboxes.dart';
 
-alertDialogueConfirmation({required BuildContext context, required int index,required String heading, required Function()? function}) {
+alertDialogueConfirmation(
+    {required BuildContext context,
+    required TodoModel todoModel,
+    required String heading,
+    required Function()? function}) {
   showDialog(
     barrierColor: Colors.black87,
     context: context,
@@ -51,9 +56,7 @@ alertDialogueConfirmation({required BuildContext context, required int index,req
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(20),
-                      onTap: () {
-                       function;
-                      },
+                      onTap: function,
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: mediaqueryWidth(0.05, context),
@@ -72,8 +75,6 @@ alertDialogueConfirmation({required BuildContext context, required int index,req
           ),
         ),
         contentPadding: const EdgeInsets.all(0),
-
-  
       );
     },
   );

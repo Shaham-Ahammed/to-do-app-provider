@@ -16,7 +16,7 @@ class HomeScreenFloatingActionButton extends StatelessWidget {
           side: const BorderSide(color: AppColors.greyShadowColor, width: 3),
           borderRadius: BorderRadius.circular(90)),
       onPressed: () {
-        showBottomSheetForAdding(context);
+        homeScreenBottomSheet(context);
       },
       child: const Icon(
         Icons.add,

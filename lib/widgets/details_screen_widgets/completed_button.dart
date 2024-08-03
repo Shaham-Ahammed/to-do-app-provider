@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app_provider/model/todo_model.dart';
 import 'package:to_do_app_provider/utils/colors.dart';
 import 'package:to_do_app_provider/utils/font.dart';
 import 'package:to_do_app_provider/utils/mediaquery.dart';
 import 'package:to_do_app_provider/utils/sizedboxes.dart';
 import 'package:to_do_app_provider/utils/texts.dart';
 import 'package:to_do_app_provider/utils/alert_dialogue.dart';
-
+import 'package:to_do_app_provider/view_model/todo_view_model.dart';
 
 class CompletedButton extends StatelessWidget {
-  const CompletedButton({
+  final TodoModel todoModel;
+  const CompletedButton(
+    this.todoModel, {
     super.key,
   });
 
@@ -20,12 +24,18 @@ class CompletedButton extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(90),
         onTap: () {
-          alertDialogueConfirmation(context: context,index: 2, heading: "completed", function: () {  });
+          alertDialogueConfirmation(
+              context: context,
+              todoModel: todoModel,
+              heading: AppTexts.completed,
+              function: () {
+                context.read<TodoViewModel>().makingATodoCompleted(todoModel);
+                Navigator.pop(context);
+              });
         },
         child: Container(
           padding: EdgeInsets.symmetric(
-              horizontal: mediaqueryWidth(0.1, context),
-              vertical: 10),
+              horizontal: mediaqueryWidth(0.1, context), vertical: 10),
           decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(90),

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app_provider/model/todo_model.dart';
 import 'package:to_do_app_provider/utils/colors.dart';
 import 'package:to_do_app_provider/utils/mediaquery.dart';
+import 'package:to_do_app_provider/view_model/todo_view_model.dart';
 import 'package:to_do_app_provider/widgets/details_screen_widgets/appbar.dart';
 import 'package:to_do_app_provider/widgets/details_screen_widgets/completed_button.dart';
 import 'package:to_do_app_provider/widgets/details_screen_widgets/details_container.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+  final TodoModel todoModel;
+  final int index;
+  const DetailScreen(this.todoModel, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +26,20 @@ class DetailScreen extends StatelessWidget {
             right: 12),
         child: SizedBox(
           height: mediaqueryHeight(1, context),
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(),
-              ToDoDetails(),
-              CompletedButton(),
+              const SizedBox(),
+              ToDoDetails(todoModel,index),
+              Consumer<TodoViewModel>(
+                builder: (context, value, child) {
+                  if (!value.filteredTodoList[index].isCompleted) {
+                    return CompletedButton(todoModel);
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ],
           ),
         ),

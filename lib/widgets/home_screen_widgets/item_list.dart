@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app_provider/model/todo_model.dart';
 import 'package:to_do_app_provider/utils/colors.dart';
 import 'package:to_do_app_provider/utils/font.dart';
 import 'package:to_do_app_provider/view/detail_screen.dart';
 
-
 class ItemList extends StatelessWidget {
+  final TodoModel todoModel;
   final int index;
   const ItemList(
-    this.index, {
+    this.todoModel,this.index, {
     super.key,
   });
 
@@ -20,7 +21,7 @@ class ItemList extends StatelessWidget {
         borderRadius: BorderRadius.circular(90),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const DetailScreen(),
+            builder: (context) =>  DetailScreen(todoModel,index),
           ));
         },
         child: Container(
@@ -29,9 +30,9 @@ class ItemList extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                     blurStyle: BlurStyle.outer,
-                    color: index % 2 == 0
-                        ? AppColors.greyShadowColor
-                        : AppColors.greenShadowColor,
+                    color: todoModel.isCompleted
+                        ? AppColors.greenShadowColor
+                        : AppColors.greyShadowColor,
                     offset: const Offset(0, 4),
                     blurRadius: 6,
                     spreadRadius: 2)
@@ -42,12 +43,11 @@ class ItemList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const CustomFont(
-                "TASK 1",
-                size: 0.05,
-                fontWeight: FontWeight.w500,
-              ),
-              index % 2 == 0
+              CustomFont(todoModel.title.toUpperCase(),
+                  size: 0.05,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.ellipsis),
+              todoModel.isCompleted
                   ? const Icon(
                       Icons.check,
                       color: AppColors.greenColor,

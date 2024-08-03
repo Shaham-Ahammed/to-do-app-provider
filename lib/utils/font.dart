@@ -9,10 +9,12 @@ class CustomFont extends StatelessWidget {
   final double size;
   final FontWeight? fontWeight;
   final String fontFamily;
+  final TextOverflow? overflow;
 
   const CustomFont(this.text,
       { this.color = AppColors.whiteColor,
       required this.size,
+ this.overflow,
       this.fontFamily = AppFonts.kodchasan,
       this.fontWeight = FontWeight.normal,
       super.key});
@@ -22,6 +24,7 @@ class CustomFont extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
+        overflow: overflow,
           color: color,
           fontFamily: fontFamily,
           fontWeight: fontWeight,
