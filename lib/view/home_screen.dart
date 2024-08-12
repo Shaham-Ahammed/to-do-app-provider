@@ -13,9 +13,20 @@ import 'package:to_do_app_provider/widgets/home_screen_widgets/floating_action_b
 import 'package:to_do_app_provider/widgets/home_screen_widgets/item_list.dart';
 import 'package:to_do_app_provider/widgets/home_screen_widgets/search_box.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    context.read<TodoViewModel>().getAllDataFromDb();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
